@@ -1,0 +1,675 @@
+@font-face {
+  font-family: 'glacial';
+  src: url(fonts/GlacialIndifference-Regular.otf);
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'glacial-bold';
+  src: url(fonts/GlacialIndifference-Bold.otf);
+  font-style: normal;
+  font-weight: 400;
+}
+
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+}
+
+.cursor {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: black;
+  display: none;
+  z-index: 4000;
+  left: 50%;
+  top:50%;
+  position: fixed;
+}
+
+html {
+  font-size: 1.5vw;
+}
+
+body{
+  font-family: "Raleway";
+  background-color: white;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 7em;
+}
+
+h2, p, .hamburger-list li a, .nav-item p{
+  font-family: 'Playfair Display'!important;
+}
+
+h2 {
+  font-size: 2.3em;
+}
+p {
+  font-size: 1.7em;
+}
+
+.lang-es, .lang-ca {
+  display:none;
+}
+
+span.lang-es, span.lang-ca{
+  display: none!important;
+}
+
+.loading {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 4000;
+  background-color: rgb(153,255,153);
+}
+
+.message {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 4000;
+  background-color: rgb(153,255,153);
+}
+
+.message p {
+  margin: auto 50px;
+  position: absolute;
+  bottom: 50px;
+}
+
+.hamburger-menu {
+  position: fixed;
+  height: 5em;
+  width: 5em;
+  top: 20px;
+  left: 7px;
+  background-color: transparent;
+  cursor: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3003!important;
+}
+
+.hamburger-list li a, .message p {
+  color: black;
+  font-size: 50px;
+}
+
+.bar {
+  width: .8em;
+  height: .06em;
+  border-radius: 1em;
+  background-color: black;
+  display: inline-block;
+  position: absolute;
+  transition: all .1s;
+}
+
+.bar::before,
+.bar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+  background: black;
+  transition: all .5s;
+}
+
+.bar::before {
+  top: -.25em;
+}
+
+.bar::after {
+  top: .25em;
+}
+
+.open .bar {
+  background-color: transparent;
+}
+
+.open .bar::before {
+  top: 0;
+  transform: rotate(135deg);
+}
+
+.open .bar::after {
+  top: 0;
+  transform: rotate(-135deg);
+}
+
+.hamburger-list {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  background-color:rgb(255, 255, 102);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  list-style: none;
+  z-index: 3000;
+}
+
+
+.side-nav {
+  position: fixed;
+  height:100%;
+  width: 200px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 100;
+  display: none;
+}
+
+.side-nav ul li {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  z-index: 100!important;
+  color: black;
+
+  }
+
+.nav-item p{
+  opacity: 0;
+}
+
+.side-nav ul li:nth-child(even){
+  padding-left: 30px;
+}
+
+.side-nav ul li:nth-child(odd) {
+  padding-left: 50px;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 150px;
+  cursor: pointer;
+}
+
+.bullet {
+  width: 10px;
+  height: 10px;
+  background-color: black;
+  border-radius: 50%;
+  margin-right: 30px;
+}
+
+.current {
+  width: 25px;
+  border-radius: 10px;
+}
+
+.side-nav ul li:not(:last-child){
+  padding-bottom: 80px;
+}
+
+.language-box {
+  position: fixed;
+  top: 0;
+  right: 0!important;
+  height: 300px;
+  width: 12em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  cursor: context-menu;
+  z-index: 3000;
+}
+
+.language-select {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+
+.language-options {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+}
+
+.show {
+  opacity: 1;
+}
+
+.active, .hamburger-list li a:hover {
+  font-weight: bold;
+  text-decoration: line-through;
+  color: #1c1606;
+}
+
+.language-options ul{
+  padding-left: 0;
+}
+.language-options ul li{
+  list-style: none;
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.language-options ul li:hover{
+  text-decoration: line-through;
+    cursor: default;
+}
+
+.hover {
+    border: 1px solid black;
+}
+
+.scroll-content {
+  min-height: 100vh;
+}
+
+.scroll-content section {
+  width: 75%;
+  min-height: 100vh;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.hello {
+  z-index: 1000;
+  padding-top: 100px;
+  padding-bottom: 300px;
+}
+
+.main span{
+  line-height: 1.5;
+  font-size: 80px;
+  display: inline-block;
+}
+
+.heading {
+  width: 95%;
+  overflow: hidden;
+}
+
+.heading .char {
+  font-size: 6em;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.content {
+padding-top: 60px;
+  width: 95%;
+ }
+
+.content p {
+  margin-bottom: 50px;
+}
+
+section.skills, section.projects {
+  width: 100vw;
+  left: 0;
+  display: flex;
+}
+
+.skills .heading, .projects .heading, .projects .content .title {
+  width: 75%;
+  align-self: center;
+  margin: 0 auto;
+}
+
+ .skill-list{
+  width:100vw!important;
+  height:700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  background-color: transparent;
+  overflow-x: hidden;
+  overflow-y: hidden;
+ }
+
+ .skill-list ul {
+   width: 100%;
+   margin-bottom: 100px;
+   flex-basis: 100%;
+ }
+
+ .skills .skill-list ul li {
+  position:absolute;
+  width: 600px;
+  height:auto;
+  background-color:transparent;
+  font-size:100px;
+  font-weight:600;
+  line-height:100px;
+  text-align:center;
+  list-style: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+ }
+
+ .skills .skill-list ul li, #email, .image-title {
+   -webkit-text-fill-color: transparent;
+   -webkit-text-stroke-width: 3px;
+   -webkit-text-stroke-color: black;
+   cursor: pointer;
+  font-family: "Raleway"!important;
+  font-size: 12em;
+ }
+
+ .skills .skill-list .boxes {
+   position: relative;
+   left: -600px;
+ }
+
+ #n04, .project-list {
+   margin-bottom: 300px;
+ }
+
+ ul.project-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  width: 100vw!important;
+  position: relative;
+  text-align: center;
+  margin-top: 100px;
+}
+
+.project-list li {
+  list-style-type: none;
+  width: 100vw;
+  border-top: 2px solid black;
+  font-weight: bold;
+  min-height: 300px;
+  max-height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.project-list li p {
+  margin-top: 50px;
+
+}
+
+.project-list:last-child {
+  border-bottom: 2px solid black;
+}
+
+.image {
+  width: 100%;
+  height: 300px;
+  position: relative;
+  margin: 0 auto;
+  left:0;right:0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.image img {
+  width: 500px;
+  height: 300px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  overflow: hidden;
+}
+
+.image-title {
+  font-weight: bold;
+  width: 100vw;
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 100px;
+}
+
+.button {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid white;
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  position: absolute;
+  z-index: 5000;
+}
+
+.progress {
+  width: 10%;
+  height: 10%;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.overlay-container {
+  width: 500px;
+  height: 300px;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  cursor: pointer;
+  /*  The following is to remedy the probable flicker on
+      pageload before Javascript kicks in
+  */
+  opacity: 0;
+}
+
+.image-overlay{
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: white;
+  font-family: "Raleway"!important;
+  font-size: 12em;
+  font-weight: bold;
+  height: 100%;
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* When JS is ready, get them back to their default states */
+.overlay-container.js-ready,
+.overlay-container.js-ready .image-overlay{
+  opacity: 1;
+}
+
+span {
+  font-size: 40px;
+}
+
+span.new {
+  padding-left: 10px;
+}
+
+#canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.contact .main{
+  width: 95%;
+  word-break: break-word;
+}
+
+.social-media {
+  height: 40px;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.contact-social {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  margin-top: 50px;
+}
+
+section.bottom {
+  min-height: 65vh!important;
+}
+
+.social-media a {
+    border: 1px solid darkGray;
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 5px;
+    font-size: 2em;
+    height: 4em;
+    width: 4em;
+    color: darkGray;
+}
+
+.social-media a:hover {
+  background-color: lightGray;
+}
+
+#email {
+  margin-top: 100px;
+  word-break: break-word;
+}
+
+@media screen and (min-width: 760px){
+  html {
+    font-size: 1vw;
+  }
+  h1 {
+    font-size: 9em;
+  }
+}
+
+@media screen and (min-width: 960px){
+  .language-box {
+    width: 9em;
+  }
+  .about .heading, .education .heading {
+    width: 50%;
+  }
+  .about .content, .education .content {
+    padding-top: 300px;
+    float:right;
+    width: 50%;
+    margin-bottom: 50px;
+   }
+
+   .projects .content .title {
+     width: 50%;
+     float: right;
+     padding-top: 200px;
+   }
+
+   .contact-social {
+     width: 50%;
+     float:right;
+     align-items: center;
+     justify-content: flex-end;
+     right: 0;
+   }
+
+   .scroll-content section {
+     width: 75%;
+     flex-direction: row;
+   }
+   section.projects, section.skills {
+     flex-direction: column;
+     width: 100%;
+   }
+   h1 {
+     font-size:6em;
+   }
+   h2 {
+     font-size: 1.5em;
+   }
+   p {
+     font-size: 1em;
+   }
+   .heading .char {
+     font-size:5em;
+   }
+   .skills .skill-list ul li, .image-title, .image-overlay {
+     font-size: 6em;
+   }
+
+  .image-overlay {
+    width: 200%;
+  }
+   #email {
+     font-size: 6em;
+     width: 100vw;
+   }
+
+   .social-media a {
+     font-size: 1em;
+     height: 3em;
+     width: 3em;
+   }
+}
+
+@media screen and (min-width: 1200px){
+  .side-nav {
+    display: flex;
+  }
+  .hamburger-menu, .hamburger-list {
+    display: none;
+  }
+}
